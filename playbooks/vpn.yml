@@ -1,0 +1,5 @@
+- hosts:
+    - tag_service_vpn
+  become: yes
+  roles:
+    - role: softether

@@ -1,0 +1,35 @@
+- name: install requirements
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - tar
+    - gcc
+    - make
+
+- name: get softether source
+  unarchive:
+    src: "http://jp.softether-download.com/files/softether/{{ softether_version }}-tree/Linux/SoftEther_VPN_Server/64bit_-_Intel_x64_or_AMD64/softether-vpnserver-{{ softether_version }}-linux-x64-64bit.tar.gz"
+    dest: /usr/local
+    copy: no
+
+- name: make softether
+  shell: make i_read_and_agree_the_license_agreement
+  args:
+    chdir: /usr/local/vpnserver
+    creates: /usr/local/vpnserver/vpnserver
+
+- name: modify /etc/systemd/system/vpnserver.service
+  template:
+    src: vpnserver.service
+    dest: /etc/systemd/system/vpnserver.service
+    owner: root
+    group: root
+    mode: 0755
+
+- name: enable a vpnserver
+  systemd:
+    name: vpnserver
+    state: started
+    enabled: yes

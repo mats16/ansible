@@ -1,0 +1,15 @@
+[Unit]
+Description=Softether VPN Server Service
+After=network.target
+
+[Service]
+Type=forking
+User=root
+ExecStart=/usr/local/vpnserver/vpnserver start
+ExecStop=/usr/local/vpnserver/vpnserver stop
+Restart=on-abort
+WorkingDirectory=/usr/local/vpnserver/
+ExecStartPre=/sbin/ip link set dev eth0 promisc on
+
+[Install]
+WantedBy=multi-user.target
