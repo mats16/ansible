@@ -1,4 +1,4 @@
-# ansible-role-softether
+# softether
 
 ansible role for [softether](https://www.softether.org/)
 
