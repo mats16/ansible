@@ -1,2 +1,4 @@
 # ansible
-ansible sample code
+
+ansible sample code.
+tested on Amazon Linux 2.
